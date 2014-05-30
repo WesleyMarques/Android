@@ -19,7 +19,7 @@ public class ContatoGUI extends Activity {
 	private EditText txtTelefone;
 	private Contato contact;
 	private List<Contato> contacts;
-	
+
 	public ContatoGUI() {
 		contact = new Contato();
 	}
@@ -38,7 +38,7 @@ public class ContatoGUI extends Activity {
 	}
 
 	public void btnConfirmar_click(View view) {
-		
+
 		try {
 
 			Intent data = new Intent();
@@ -46,11 +46,27 @@ public class ContatoGUI extends Activity {
 			contact.setPhoneNumber(txtTelefone.getText().toString());
 			contacts = DataOffline.loadContacts();
 			contacts.add(contact);
-			DataOffline.saveData(contacts,"contacts.dat");
-			
+			DataOffline.saveData(contacts, "contacts.dat");
 			data.putExtra("agenda", contact);
 			setResult(Activity.RESULT_OK, data);
 			finish();
+		} catch (Exception e) {
+			trace("Erro : " + e.getMessage());
+		}
+	}
+
+	public void btnThread_click(View view) {
+
+		try {
+			Thread threadCall = new Thread(){
+				@Override
+				public void run(){
+					Intent it = new Intent(ContatoGUI.this, CallReceive.class);
+					startActivityForResult(it,0);					
+				}
+			};
+			threadCall.start();
+			
 		} catch (Exception e) {
 			trace("Erro : " + e.getMessage());
 		}

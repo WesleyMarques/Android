@@ -58,6 +58,7 @@
         android:layout_alignRight="@+id/edtPhone"
         android:layout_below="@+id/linearLayout1"
         android:layout_marginTop="145dp"
+        android:onClick="btnThread_click"
         android:text="@string/threadStart" />
 
 </RelativeLayout>
