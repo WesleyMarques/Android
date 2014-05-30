@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DiaryCall</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="cadastrarButton">Create Contact</string>
+    <string name="edtPhone">Telefone </string>
+    <string name="edtName">Nome</string>
+    <string name="btnConfirmar">Confirmar</string>
+    <string name="btnCancelar">Cancelar</string>
+
+</resources>

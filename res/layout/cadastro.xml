@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+     <EditText
+         android:id="@+id/edtName"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="5dip"
+         android:hint="@string/edtName"
+         android:inputType="text"
+         android:width="190dip" >
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/edtPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtName"
+        android:layout_marginLeft="5dip"
+        android:hint="@string/edtPhone"
+        android:inputType="phone"
+        android:width="190dip" >
+
+    </EditText>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtPhone"
+        android:gravity="center_vertical">    
+        <Button
+            android:text="@string/btnConfirmar"
+            android:layout_width="0dip"
+            android:layout_weight="1.0"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnConfirmar"
+            android:onClick="btnConfirmar_click">
+        </Button>
+ 
+        <Button
+            android:text="@string/btnCancelar"
+            android:layout_height="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="1.0"
+            android:id="@+id/btnCancelar"
+            android:onClick="btnCancelar_click">
+        </Button>
+    </LinearLayout>
+    
+
+</RelativeLayout>
