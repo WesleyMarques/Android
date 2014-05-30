@@ -3,16 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-     <EditText
-         android:id="@+id/edtName"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginLeft="5dip"
-         android:hint="@string/edtName"
-         android:inputType="text"
-         android:width="190dip" >
 
+    <EditText
+        android:id="@+id/edtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:hint="@string/edtName"
+        android:inputType="text"
+        android:width="190dip" >
     </EditText>
 
     <EditText
@@ -24,31 +23,41 @@
         android:hint="@string/edtPhone"
         android:inputType="phone"
         android:width="190dip" >
-
     </EditText>
+
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edtPhone"
-        android:gravity="center_vertical">    
+        android:gravity="center_vertical" >
+
         <Button
-            android:text="@string/btnConfirmar"
-            android:layout_width="0dip"
-            android:layout_weight="1.0"
-            android:layout_height="wrap_content"
             android:id="@+id/btnConfirmar"
-            android:onClick="btnConfirmar_click">
-        </Button>
- 
-        <Button
-            android:text="@string/btnCancelar"
-            android:layout_height="wrap_content"
             android:layout_width="0dip"
+            android:layout_height="wrap_content"
             android:layout_weight="1.0"
+            android:onClick="btnConfirmar_click"
+            android:text="@string/btnConfirmar" >
+        </Button>
+
+        <Button
             android:id="@+id/btnCancelar"
-            android:onClick="btnCancelar_click">
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:onClick="btnCancelar_click"
+            android:text="@string/btnCancelar" >
         </Button>
     </LinearLayout>
-    
+
+    <Button
+        android:id="@+id/threadStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/edtPhone"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_marginTop="145dp"
+        android:text="@string/threadStart" />
 
 </RelativeLayout>

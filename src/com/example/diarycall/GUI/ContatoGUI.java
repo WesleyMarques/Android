@@ -17,8 +17,12 @@ public class ContatoGUI extends Activity {
 
 	private EditText txtNome;
 	private EditText txtTelefone;
-	private Contato contact = new Contato();
+	private Contato contact;
 	private List<Contato> contacts;
+	
+	public ContatoGUI() {
+		contact = new Contato();
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +44,9 @@ public class ContatoGUI extends Activity {
 			Intent data = new Intent();
 			contact.setNome(txtNome.getText().toString());
 			contact.setPhoneNumber(txtTelefone.getText().toString());
-			System.err.println("erro");
 			contacts = DataOffline.loadContacts();
 			contacts.add(contact);
-			DataOffline.saveData("contacts.dat");
+			DataOffline.saveData(contacts,"contacts.dat");
 			
 			data.putExtra("agenda", contact);
 			setResult(Activity.RESULT_OK, data);

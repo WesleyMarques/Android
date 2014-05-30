@@ -21,12 +21,9 @@ import com.example.diarycall.codes.Contato;
  */
 public class DataOffline {
 
-    private static List<Contato> contacts = new ArrayList<Contato>();
+    private static List<Contato> contacts;
     
-    public static void addContact(Contato cont){
-    	contacts.add(cont);
-    	
-    }
+    
 
     /**
      * Load users from file
@@ -38,7 +35,8 @@ public class DataOffline {
      *
      */
     public static List<Contato> loadContacts() throws Exception {
-        List<Object> listConts;
+        List<Object> listConts = new ArrayList<Object>();
+        contacts = new ArrayList<Contato>();
         listConts = readData("contacts.dat");
         //contacts = new ArrayList<Contato>();
         // Downcast da lista de usuários do tipo Object para User
@@ -63,7 +61,7 @@ public class DataOffline {
         List<Object> dataObject = null;
 
         	try {
-				in = new ObjectInputStream(new FileInputStream("src/com/example/diarycall/data/contacts.dat"));
+				in = new ObjectInputStream(new FileInputStream("src/com/example/diarycall/data/"+file));
 			} catch (StreamCorruptedException e) {
 				throw new Exception("Erro no stream: "+ e.getMessage());
 			} catch (FileNotFoundException e) {

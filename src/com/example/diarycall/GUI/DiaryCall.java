@@ -28,7 +28,7 @@ public class DiaryCall extends Activity {
 		}
 	}
 	
-	 public void onClick(View view) {
+	 public void onClickCadastro(View view) {
 	        switch (view.getId()) {
 	        case R.id.cadastrarButton:
 	            InserirContato();
@@ -38,8 +38,17 @@ public class DiaryCall extends Activity {
 
 	private void InserirContato() {
 		try {
-			Intent it = new Intent(DiaryCall.this, ContatoGUI.class);
-			startActivityForResult(it,0);// chama a tela 
+			Thread threadContact = new Thread(){
+				@Override
+				public void run()
+	              {
+					Intent it = new Intent(DiaryCall.this, ContatoGUI.class);
+					startActivityForResult(it,0);// chama a tela 
+	              }
+				
+			};
+			threadContact.start();
+			
 		} catch (Exception e) {
 			trace("Erro : " + e.getMessage());
 		}

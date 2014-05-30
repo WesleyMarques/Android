@@ -28,11 +28,5 @@ public class DataTeste {
 
 	}
 
-	@Test
-	public void temp() throws Exception  {
-		Contato cont = new Contato("Wesley", "96542659");
-		DataOffline.addContact(cont);
-		
-			assertTrue(DataOffline.saveData("contacts.dat"));
-	}
+	
 }
