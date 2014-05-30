@@ -7,24 +7,32 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.example.diarycall.codes.Contato;
 import com.example.diarycall.data.DataOffline;
 
 /**
  * @author Wesley
- *
+ * 
  */
 public class DataTeste {
 
 	@Test
 	public void DeveCarregarAquivOffline() {
 		try {
-			assertNull(DataOffline.loadContacts());
-			fail();
+			//assertNull(DataOffline.loadContacts());
+			System.out.println(DataOffline.loadContacts().get(0).getNome());
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
-		
+
 	}
 
+	@Test
+	public void temp() throws Exception  {
+		Contato cont = new Contato("Wesley", "96542659");
+		DataOffline.addContact(cont);
+		
+			assertTrue(DataOffline.saveData("contacts.dat"));
+	}
 }
