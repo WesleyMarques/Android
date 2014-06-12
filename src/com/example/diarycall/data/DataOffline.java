@@ -3,6 +3,7 @@
  */
 package com.example.diarycall.data;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -13,6 +14,7 @@ import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import com.example.diarycall.codes.Contato;
 
 /**
@@ -21,9 +23,9 @@ import com.example.diarycall.codes.Contato;
  */
 public class DataOffline {
 
-    private static List<Contato> contacts;
+    private List<Contato> contacts;
     
-    
+
 
     /**
      * Load users from file
@@ -34,18 +36,16 @@ public class DataOffline {
      *
      *
      */
-    public static List<Contato> loadContacts() throws Exception {
+    public List<Contato> loadContacts(File file) throws Exception {
         List<Object> listConts = new ArrayList<Object>();
         contacts = new ArrayList<Contato>();
-        listConts = readData("contacts.dat");
-        //contacts = new ArrayList<Contato>();
+        listConts = readData(file);
         // Downcast da lista de usuários do tipo Object para User
         if (listConts != null) {
             for (Object object : listConts) {
                 contacts.add((Contato) object);
             }
         }
-        saveData("contacts.dat");
         return contacts;
     }
 
@@ -56,28 +56,24 @@ public class DataOffline {
      * @return An object list, with the information about the file.
      * @throws Exception 
      */
-    private static List<Object> readData(String file) throws Exception{
-        ObjectInputStream in = null;
+    private List<Object> readData(File file) throws Exception{
+    	ObjectInputStream in = null;
         List<Object> dataObject = null;
 
         	try {
-				in = new ObjectInputStream(new FileInputStream("src/com/example/diarycall/data/"+file));
+				in = new ObjectInputStream(new FileInputStream(file));
 			} catch (StreamCorruptedException e) {
 				throw new Exception("Erro no stream: "+ e.getMessage());
 			} catch (FileNotFoundException e) {
 				throw new Exception("Erro no arquivo: "+ e.getMessage());
 			} catch (IOException e) {
 				throw new Exception("Erro no Carregamento: "+ e.getMessage());
+			}finally{
+	            dataObject = (List<Object>) in.readObject();
+				in.close();				
 			}
-            dataObject = (ArrayList<Object>) in.readObject();
-            in.close();
+            
         return dataObject;
-    }
-
-    public static boolean saveData(List<Contato> cont, String file) throws Exception{
-    	contacts = cont;
-    	return saveData(file);
-    	
     }
     /**
      * Save data in archive
@@ -85,20 +81,34 @@ public class DataOffline {
      * @param file
      * @return
      */
-    public static boolean saveData(String file) throws Exception{
-        ObjectOutputStream out = null;
+    public boolean saveData(File file) throws Exception{
+    	FileOutputStream out = null;
+        ObjectOutputStream outObj = null;
         try {
-            try {            	
-                out = new ObjectOutputStream(new FileOutputStream("src/com/example/diarycall/data/"+file));
+            try { 
+            	out = new FileOutputStream(file);
+            	outObj = new ObjectOutputStream(out);
+                //out = openFileOutput("contacts.dat",MODE_APPEND);
             } catch (FileNotFoundException e) {
             	System.err.println(e.getMessage());
                 return false;
             }
-            out.writeObject(contacts);
+            //out.write(buffer);
+            outObj.writeObject(contacts);
             out.close();
+            outObj.close();
         } catch (Exception e) {
             throw new Exception("Erro ao salvar os dados");
         }
         return true;
+    }
+    
+    public List<Contato> getContacts(){
+    	return contacts;
+    }
+    
+    public void setContact(Contato cont){
+    	contacts.add(cont);
+    	
     }
 }

@@ -10,5 +10,8 @@
     <string name="btnConfirmar">Confirmar</string>
     <string name="btnCancelar">Cancelar</string>
     <string name="threadStart">Thread Start</string>
+    <string name="offButton">Desligar</string>
+    <string name="chronometer">Chronometer</string>
+    <string name="myContacts">Meus Contatos</string>
 
 </resources>

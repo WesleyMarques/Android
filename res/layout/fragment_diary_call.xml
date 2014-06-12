@@ -14,9 +14,28 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:text="@string/cadastrarButton" 
+        android:layout_marginTop="20dp"
         android:onClick="onClickCadastro"
-        />
+        android:text="@string/cadastrarButton" />
 
+    <TextView
+        android:id="@+id/myContacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/listContacts"
+        android:layout_below="@+id/cadastrarButton"
+        android:text="@string/myContacts"
+        android:layout_marginTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <ListView
+        android:id="@+id/listContacts"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myContacts"
+        android:layout_marginTop="35dp" >
+    </ListView>
+
+    
+    
 </RelativeLayout>

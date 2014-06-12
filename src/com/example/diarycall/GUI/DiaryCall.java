@@ -1,6 +1,12 @@
 package com.example.diarycall.GUI;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.diarycall.R;
+import com.example.diarycall.codes.Contato;
+import com.example.diarycall.data.DataOffline;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -12,10 +18,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 import android.os.Build;
 
 public class DiaryCall extends Activity {
+
+	private List<Contato> contacts = null;
+	private ArrayAdapter<Contato> adaptador = null;
+	private DataOffline data = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,30 +39,56 @@ public class DiaryCall extends Activity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 	}
-	
-	 public void onClickCadastro(View view) {
-	        switch (view.getId()) {
-	        case R.id.cadastrarButton:
-	            InserirContato();
-	            break;
-	        }
-	    }
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		// List View with all Contacts
+
+		ListView listView = (ListView) findViewById(R.id.listContacts);
+		File file = getFileStreamPath("contacts.dat");
+		data = new DataOffline();
+		try {
+			contacts = data.loadContacts(file);
+		} catch (Exception e) {
+			toast(e.getMessage());
+		}
+		adaptador = new ArrayAdapter<Contato>(this,
+				android.R.layout.simple_list_item_1, contacts);
+		listView.setAdapter(adaptador);
+
+		// End List View
+	}
+
+	public void onClickCadastro(View view) {
+		switch (view.getId()) {
+		case R.id.cadastrarButton:
+			InserirContato();
+			break;
+		}
+	}
 
 	private void InserirContato() {
 		try {
-			Thread threadContact = new Thread(){
+			Thread threadContact = new Thread() {
 				@Override
-				public void run()
-	              {
+				public void run() {
 					Intent it = new Intent(DiaryCall.this, ContatoGUI.class);
-					startActivityForResult(it,0);// chama a tela 
-	              }
-				
+					startActivityForResult(it, 0);// chama a tela
+				}
 			};
 			threadContact.start();
-			
 		} catch (Exception e) {
 			trace("Erro : " + e.getMessage());
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			toast("Contato cadastrado com sucesso!");
+		} else {
+			toast("Contato não cadastrado!");
 		}
 	}
 
@@ -84,17 +122,14 @@ public class DiaryCall extends Activity {
 			return rootView;
 		}
 	}
-	
-	public void toast (String msg)
-    {
-        Toast.makeText (getApplicationContext(), msg, Toast.LENGTH_SHORT).show ();
-    } 
-     
-    private void trace (String msg) 
-    {
-        toast (msg);
-    }
- 
+
+	public void toast(String msg) {
+		Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+	}
+
+	private void trace(String msg) {
+		toast(msg);
+	}
 
 	@Override
 	protected void onPause() {
