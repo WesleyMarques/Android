@@ -43,21 +43,6 @@ public class DiaryCall extends Activity {
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		// List View with all Contacts
-
-		ListView listView = (ListView) findViewById(R.id.listContacts);
-		File file = getFileStreamPath("contacts.dat");
-		data = new DataOffline();
-		try {
-			contacts = data.loadContacts(file);
-		} catch (Exception e) {
-			toast(e.getMessage());
-		}
-		adaptador = new ArrayAdapter<Contato>(this,
-				android.R.layout.simple_list_item_1, contacts);
-		listView.setAdapter(adaptador);
-
-		// End List View
 	}
 
 	public void onClickCadastro(View view) {
@@ -140,7 +125,27 @@ public class DiaryCall extends Activity {
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
+		
+		// List View with all Contacts
+
+		ListView listView = (ListView) findViewById(R.id.listContacts);
+		File file = getFileStreamPath("contacts.dat");
+		data = new DataOffline();
+		try {
+			contacts = data.loadContacts(file);
+		} catch (Exception e) {
+			toast(e.getMessage());
+		}
+		if (contacts == null) {
+			contacts = new ArrayList<Contato>();
+			contacts.add(new Contato("Nenhum Contato", ""));
+			
+		}
+		adaptador = new ArrayAdapter<Contato>(this,
+				android.R.layout.simple_list_item_1, contacts);
+		listView.setAdapter(adaptador);
 		super.onResume();
+		// End List View
 	}
 
 }

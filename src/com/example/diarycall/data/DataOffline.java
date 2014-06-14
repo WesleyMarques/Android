@@ -69,8 +69,11 @@ public class DataOffline {
 			} catch (IOException e) {
 				throw new Exception("Erro no Carregamento: "+ e.getMessage());
 			}finally{
-	            dataObject = (List<Object>) in.readObject();
-				in.close();				
+				if (in != null) {
+					dataObject = (List<Object>) in.readObject();
+					in.close();						
+				}
+	            			
 			}
             
         return dataObject;
