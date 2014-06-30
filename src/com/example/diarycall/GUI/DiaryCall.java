@@ -78,7 +78,6 @@ public class DiaryCall extends Activity {
 			@Override
 			public void onItemClick(AdapterView arg0, View view, int position, long index){
 				final int auxPosition = position;
-				Log.d("menu", contacts.get(auxPosition).getNome());
 				try {
 					Thread threadInfoContact = new Thread() {
 						@Override

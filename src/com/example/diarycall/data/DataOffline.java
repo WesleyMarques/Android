@@ -111,7 +111,18 @@ public class DataOffline {
     }
     
     public void setContact(Contato cont){
-    	contacts.add(cont);
-    	
+    	contacts.add(cont);    	
+    }
+    
+    public boolean removeByNumber(String number){
+    	int i = 0;
+    	for (Contato contato : contacts) {
+    		if (contato.getPhoneNumber().equals(number)) {
+    			contacts.remove(i);
+    			return true;
+			}
+    		i++;
+		}
+    	return false;
     }
 }
