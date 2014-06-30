@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">DiaryCall</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="cadastrarButton">Create Contact</string>
     <string name="edtPhone">Telefone </string>
@@ -13,5 +12,6 @@
     <string name="offButton">Desligar</string>
     <string name="chronometer">Chronometer</string>
     <string name="myContacts">Meus Contatos</string>
+    <string name="searchContact">SEARCH CONTACT</string>
 
 </resources>

@@ -5,6 +5,7 @@ import com.example.diarycall.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 public class CallReceive extends Activity {
 

@@ -13,12 +13,17 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.os.Build;
@@ -28,6 +33,8 @@ public class DiaryCall extends Activity {
 	private List<Contato> contacts = null;
 	private ArrayAdapter<Contato> adaptador = null;
 	private DataOffline data = null;
+	private EditText searchContact;
+	private ListView listSearch;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,37 @@ public class DiaryCall extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+	}
+
+	@Override
+	protected void onStart() {
+		searchContact = (EditText) this.findViewById(R.id.searchContact);
+		listSearch = (ListView) this.findViewById(R.id.listContacts);
+
+		Log.i("Test", "" + (searchContact == null));
+		searchContact.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				String filtFromET = searchContact.getText().toString();
+				loadContacts(filtFromET);
+				setContacts();
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		super.onStart();
 	}
 
 	@Override
@@ -59,6 +97,7 @@ public class DiaryCall extends Activity {
 				@Override
 				public void run() {
 					Intent it = new Intent(DiaryCall.this, ContatoGUI.class);
+					it.putExtra("Act", "Create contact");
 					startActivityForResult(it, 0);// chama a tela
 				}
 			};
@@ -124,28 +163,43 @@ public class DiaryCall extends Activity {
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
-		
 		// List View with all Contacts
+		loadContacts("");
+		setContacts();
+		super.onResume();
+		// End List View
+	}
 
-		ListView listView = (ListView) findViewById(R.id.listContacts);
+	private void setContacts() {
+		adaptador = new ArrayAdapter<Contato>(this,
+				android.R.layout.simple_list_item_1, contacts);
+		listSearch.setAdapter(adaptador);
+	}
+
+	private void loadContacts(String filter) {
 		File file = getFileStreamPath("contacts.dat");
+		List<Contato> listAux = null;
 		data = new DataOffline();
 		try {
-			contacts = data.loadContacts(file);
+			listAux = data.loadContacts(file);
 		} catch (Exception e) {
 			toast(e.getMessage());
 		}
-		if (contacts == null) {
-			contacts = new ArrayList<Contato>();
-			contacts.add(new Contato("Nenhum Contato", ""));
-			
+		if (listAux == null) {
+			listAux.add(new Contato("Nenhum Contato", ""));
 		}
-		adaptador = new ArrayAdapter<Contato>(this,
-				android.R.layout.simple_list_item_1, contacts);
-		listView.setAdapter(adaptador);
-		super.onResume();
-		// End List View
+		filterList(filter, listAux);
+
+	}
+
+	private void filterList(String filter, List<Contato> listAux) {
+		contacts = new ArrayList<Contato>();
+		for (Contato contato : listAux) {
+			if (contato.getNome().contains(filter) || filter.equals("")) {
+				this.contacts.add(contato);
+			}
+		}
+
 	}
 
 }

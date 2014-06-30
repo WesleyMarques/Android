@@ -36,6 +36,16 @@
         android:layout_marginTop="35dp" >
     </ListView>
 
-    
+    <EditText
+        android:id="@+id/searchContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/myContacts"
+        android:layout_below="@+id/myContacts"
+        android:ems="10"
+        android:hint="@string/searchContact" >
+
+        <requestFocus />
+    </EditText>
     
 </RelativeLayout>
