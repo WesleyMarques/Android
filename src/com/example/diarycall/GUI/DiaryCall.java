@@ -9,7 +9,6 @@ import com.example.diarycall.codes.Contato;
 import com.example.diarycall.data.DataOffline;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,18 +16,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.os.Build;
 
 public class DiaryCall extends Activity {
 
@@ -79,6 +74,7 @@ public class DiaryCall extends Activity {
 		});
 		listSearch.setOnItemClickListener(new OnItemClickListener() {
 			
+			@SuppressWarnings("rawtypes")
 			@Override
 			public void onItemClick(AdapterView arg0, View view, int position, long index){
 				final int auxPosition = position;
@@ -90,7 +86,7 @@ public class DiaryCall extends Activity {
 							Intent infoContato = new Intent(DiaryCall.this, InfoContato.class);
 							infoContato.putExtra("nome", contacts.get(auxPosition).getNome());
 							infoContato.putExtra("fone", contacts.get(auxPosition).getPhoneNumber());
-							startActivityForResult(infoContato, 0);// chama a tela
+							startActivity(infoContato);// chama a tela
 						}
 					};
 					threadInfoContact.start();
@@ -210,6 +206,7 @@ public class DiaryCall extends Activity {
 			toast(e.getMessage());
 		}
 		if (listAux == null) {
+			listAux = new ArrayList<Contato>();
 			listAux.add(new Contato("Nenhum Contato", ""));
 		}
 		filterList(filter, listAux);

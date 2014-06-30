@@ -16,5 +16,9 @@
     <string name="apagar">Apagar</string>
     <string name="editar">Editar</string>
     <string name="sendmsg">Enviar Mensagem</string>
+    <string name="salvar">Salvar</string>
+    <string name="menssage">Messagem</string>
+    <string name="enviar">Enviar</string>
+    <string name="to">Para</string>
 
 </resources>

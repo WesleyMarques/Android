@@ -4,19 +4,13 @@ import com.example.diarycall.R;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 
-public class CallReceive extends Activity {
-
+public class SendMessage extends Activity{
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.callreceive);
-
-	}
-	
-	public void offClick(View view){
-		finish();		
+		setContentView(R.layout.sendmessage);
 	}
 
 }

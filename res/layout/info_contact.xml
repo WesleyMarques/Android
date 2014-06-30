@@ -55,23 +55,37 @@
         android:text="@string/apagar" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonEdit"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="17dp"
         android:layout_toRightOf="@+id/edtPhone"
+        android:onClick="editarInfo"
         android:text="@string/editar" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonSend"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button3"
-        android:layout_alignBottom="@+id/button3"
+        android:layout_alignBaseline="@+id/buttonEdit"
+        android:layout_alignBottom="@+id/buttonEdit"
         android:layout_centerHorizontal="true"
+        android:onClick="enviarMsg"
         android:text="@string/sendmsg" />
+
+    <Button
+        android:id="@+id/buttonSalvar"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/edtPhone"
+        android:layout_below="@+id/edtPhone"
+        android:text="@string/salvar"
+        android:visibility="invisible"
+        android:onClick="salvarInfo" 
+        />
 
 </RelativeLayout>
