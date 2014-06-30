@@ -17,8 +17,7 @@ public class CallReceive extends Activity {
 	}
 	
 	public void offClick(View view){
-		finish();
-		
+		finish();		
 	}
 
 }

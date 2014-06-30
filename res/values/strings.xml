@@ -13,5 +13,8 @@
     <string name="chronometer">Chronometer</string>
     <string name="myContacts">Meus Contatos</string>
     <string name="searchContact">SEARCH CONTACT</string>
+    <string name="apagar">Apagar</string>
+    <string name="editar">Editar</string>
+    <string name="sendmsg">Enviar Mensagem</string>
 
 </resources>

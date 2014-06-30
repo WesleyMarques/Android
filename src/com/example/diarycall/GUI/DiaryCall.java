@@ -22,6 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView.FindListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -52,7 +54,7 @@ public class DiaryCall extends Activity {
 		searchContact = (EditText) this.findViewById(R.id.searchContact);
 		listSearch = (ListView) this.findViewById(R.id.listContacts);
 
-		Log.i("Test", "" + (searchContact == null));
+		//Evento para o campo de texto quando modificado
 		searchContact.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
@@ -73,6 +75,28 @@ public class DiaryCall extends Activity {
 			public void afterTextChanged(Editable s) {
 				// TODO Auto-generated method stub
 
+			}
+		});
+		listSearch.setOnItemClickListener(new OnItemClickListener() {
+			
+			@Override
+			public void onItemClick(AdapterView arg0, View view, int position, long index){
+				final int auxPosition = position;
+				Log.d("menu", contacts.get(auxPosition).getNome());
+				try {
+					Thread threadInfoContact = new Thread() {
+						@Override
+						public void run() {
+							Intent infoContato = new Intent(DiaryCall.this, InfoContato.class);
+							infoContato.putExtra("nome", contacts.get(auxPosition).getNome());
+							infoContato.putExtra("fone", contacts.get(auxPosition).getPhoneNumber());
+							startActivityForResult(infoContato, 0);// chama a tela
+						}
+					};
+					threadInfoContact.start();
+				} catch (Exception e) {
+					trace("Erro : " + e.getMessage());
+				}								
 			}
 		});
 		super.onStart();
