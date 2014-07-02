@@ -66,7 +66,7 @@ public class ContatoGUI extends Activity {
 				toast("Arquivo não encontrado!");
 			}
 			this.data.setContact(contactActual);
-			this.data.saveData(file);
+			this.data.saveData(file, this.data.getContacts());
 			setResult(Activity.RESULT_OK, data);
 			finish();
 		} catch (Exception e) {

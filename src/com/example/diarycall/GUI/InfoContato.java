@@ -132,7 +132,7 @@ public class InfoContato extends Activity {
 			this.data.loadContacts(file);
 		}
 		this.data.removeByNumber(fone);
-		this.data.saveData(file);
+		this.data.saveData(file, data.getContacts());
 
 	}
 }

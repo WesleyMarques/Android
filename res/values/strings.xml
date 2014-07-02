@@ -12,13 +12,14 @@
     <string name="offButton">Desligar</string>
     <string name="chronometer">Chronometer</string>
     <string name="myContacts">Meus Contatos</string>
-    <string name="searchContact">SEARCH CONTACT</string>
+    <string name="searchContact">SEARCH</string>
     <string name="apagar">Apagar</string>
     <string name="editar">Editar</string>
     <string name="sendmsg">Enviar Mensagem</string>
     <string name="salvar">Salvar</string>
-    <string name="menssage">Messagem</string>
+    <string name="menssage">Menssagem</string>
     <string name="enviar">Enviar</string>
     <string name="to">Para</string>
+    
 
 </resources>

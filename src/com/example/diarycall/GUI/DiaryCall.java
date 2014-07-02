@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.example.diarycall.R;
 import com.example.diarycall.codes.Contato;
+import com.example.diarycall.controller.Controller;
 import com.example.diarycall.data.DataOffline;
 
 import android.app.Activity;
@@ -29,7 +30,7 @@ public class DiaryCall extends Activity {
 
 	private List<Contato> contacts = null;
 	private ArrayAdapter<Contato> adaptador = null;
-	private DataOffline data = null;
+	private Controller controller = null;
 	private EditText searchContact;
 	private ListView listSearch;
 
@@ -37,7 +38,12 @@ public class DiaryCall extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_diary_call);
-
+		
+		controller = new Controller();
+		controller.setFileContacts(getFileStreamPath("contacts.dat"));
+		controller.setFileMessage(getFileStreamPath("messages.dat"));
+		
+		//
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -54,9 +60,9 @@ public class DiaryCall extends Activity {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
-				String filtFromET = searchContact.getText().toString();
-				loadContacts(filtFromET);
-				setContacts();
+				controller.carregaContatos();
+				contacts = controller.filtraList(searchContact.getText().toString());
+				setContactsInListView();
 			}
 
 			@Override
@@ -72,6 +78,7 @@ public class DiaryCall extends Activity {
 
 			}
 		});
+		
 		listSearch.setOnItemClickListener(new OnItemClickListener() {
 			
 			@SuppressWarnings("rawtypes")
@@ -95,11 +102,6 @@ public class DiaryCall extends Activity {
 			}
 		});
 		super.onStart();
-	}
-
-	@Override
-	protected void onRestart() {
-		super.onRestart();
 	}
 
 	public void onClickCadastro(View view) {
@@ -173,53 +175,20 @@ public class DiaryCall extends Activity {
 	private void trace(String msg) {
 		toast(msg);
 	}
-
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-	}
-
+	
 	@Override
 	protected void onResume() {
 		// List View with all Contacts
-		loadContacts("");
-		setContacts();
+		controller.carregaContatos();
+		contacts = controller.filtraList("");
+		setContactsInListView();
 		super.onResume();
 		// End List View
 	}
 
-	private void setContacts() {
+	private void setContactsInListView() {
 		adaptador = new ArrayAdapter<Contato>(this,
 				android.R.layout.simple_list_item_1, contacts);
 		listSearch.setAdapter(adaptador);
 	}
-
-	private void loadContacts(String filter) {
-		File file = getFileStreamPath("contacts.dat");
-		List<Contato> listAux = null;
-		data = new DataOffline();
-		try {
-			listAux = data.loadContacts(file);
-		} catch (Exception e) {
-			toast(e.getMessage());
-		}
-		if (listAux == null) {
-			listAux = new ArrayList<Contato>();
-			listAux.add(new Contato("Nenhum Contato", ""));
-		}
-		filterList(filter, listAux);
-
-	}
-
-	private void filterList(String filter, List<Contato> listAux) {
-		contacts = new ArrayList<Contato>();
-		for (Contato contato : listAux) {
-			if (contato.getNome().contains(filter) || filter.equals("")) {
-				this.contacts.add(contato);
-			}
-		}
-
-	}
-
 }

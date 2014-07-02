@@ -13,9 +13,10 @@ import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
 
 import com.example.diarycall.codes.Contato;
+import com.example.diarycall.codes.Menssagem;
 
 /**
  * @author Wesley
@@ -24,9 +25,14 @@ import com.example.diarycall.codes.Contato;
 public class DataOffline {
 
     private List<Contato> contacts;
+    //A key é do número que enviou a msg
+    private List<Menssagem> messages;
     
-
-
+    public DataOffline() {
+		contacts = new ArrayList<Contato>();
+		messages = new ArrayList<Menssagem>();
+	}
+    
     /**
      * Load users from file
      *
@@ -47,6 +53,28 @@ public class DataOffline {
             }
         }
         return contacts;
+    }
+
+    /**
+     * Load users from file
+     *
+     * @return Returns a users list.
+     * @throws Exception 
+     *
+     *
+     *
+     */
+    public List<Menssagem> loadMessage(File file) throws Exception {
+        List<Object> listConts = new ArrayList<Object>();
+        messages = new ArrayList<Menssagem>();
+        listConts = readData(file);
+        // Downcast da lista de usuÃ¡rios do tipo Object para User
+        if (listConts != null) {
+            for (Object object : listConts) {
+                messages.add((Menssagem) object);
+            }
+        }
+        return messages;
     }
 
     /**
@@ -84,20 +112,18 @@ public class DataOffline {
      * @param file
      * @return
      */
-    public boolean saveData(File file) throws Exception{
+    public boolean saveData(File file, Object obj) throws Exception{
     	FileOutputStream out = null;
         ObjectOutputStream outObj = null;
         try {
             try { 
             	out = new FileOutputStream(file);
             	outObj = new ObjectOutputStream(out);
-                //out = openFileOutput("contacts.dat",MODE_APPEND);
             } catch (FileNotFoundException e) {
             	System.err.println(e.getMessage());
                 return false;
             }
-            //out.write(buffer);
-            outObj.writeObject(contacts);
+            outObj.writeObject(obj);
             out.close();
             outObj.close();
         } catch (Exception e) {
@@ -110,10 +136,17 @@ public class DataOffline {
     	return contacts;
     }
     
+    public List<Menssagem> getMessages(){
+    	return messages;
+    }
+    
     public void setContact(Contato cont){
     	contacts.add(cont);    	
     }
     
+    public void setMessage(Menssagem msg){
+    	messages.add(msg);    	
+    }
     public boolean removeByNumber(String number){
     	int i = 0;
     	for (Contato contato : contacts) {

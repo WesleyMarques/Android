@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textViewTo"
         android:layout_below="@+id/textViewTo"
+        android:hint=""
         android:ems="10" 
         android:enabled="false">
     </EditText>
@@ -41,6 +42,7 @@
         android:layout_alignLeft="@+id/textViewMsg"
         android:layout_below="@+id/textViewMsg"
         android:ems="10"
+        android:hint=""
         android:inputType="textMultiLine">
         <requestFocus></requestFocus>
         </EditText>
@@ -61,8 +63,26 @@
         android:layout_alignBaseline="@+id/buttonApagar"
         android:layout_alignBottom="@+id/buttonApagar"
         android:layout_alignRight="@+id/editTextMsg"
+        android:onClick="sendMsg"
         android:text="@string/enviar" />
 
-    
+    <ListView
+        android:id="@+id/listMensagens"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonApagar"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true" >
+    </ListView>
+
+    <EditText
+        android:id="@+id/searchMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/buttonApagar"
+        android:hint="@string/searchContact"
+        android:ems="10" />
 
 </RelativeLayout>

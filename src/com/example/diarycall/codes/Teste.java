@@ -1,6 +1,7 @@
 package com.example.diarycall.codes;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -12,11 +13,9 @@ public class Teste {
 	@Test
 	public void test() throws Exception{
 		DataOffline data = new DataOffline();
-		File file = new File("src/com/example/diarycall/codes/contacts.dat");
+		File file = new File("src/com/example/diarycall/codes/messages.dat");
 		System.err.println(file.canWrite());
-		List<Contato> ls = data.loadContacts(file);
-		data.setContact(new Contato("Teste","0000000"));
-		data.saveData(file);
+		data.saveData(file,new ArrayList<Menssagem>());
 	}
 
 }
