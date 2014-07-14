@@ -5,29 +5,46 @@
     android:orientation="vertical" >
 
     <Button
+        android:id="@+id/Button01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/offButton"
+        android:layout_alignParentLeft="true"
+        android:minHeight="45dp"
+        android:minWidth="150dp"
+        android:onClick="offClick"
+        android:text="@string/acceptButton" />
+
+    <Button
         android:id="@+id/offButton"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="104dp"
+        android:layout_marginBottom="138dp"
         android:minHeight="45dp"
         android:minWidth="150dp"
         android:onClick="offClick"
         android:text="@string/offButton" />
 
-    <Chronometer
-        android:id="@+id/chronometer"
+    <Button
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/offButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="55dp"
+        android:text="@string/sendmsg" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button1"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="47dp"
-        android:layout_marginTop="40dp"
-        android:minHeight="50dp"
-        android:minWidth="50dp"
-        android:text="@string/chronometer"
-        android:textSize="30sp"
-        android:visibility="visible" />
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="63dp"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

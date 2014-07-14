@@ -7,7 +7,10 @@ public class Menssagem implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5737394581826607047L;
+	/**
+	 * 
+	 */
 	private String foneDestino;
 	private String messagem;
 	

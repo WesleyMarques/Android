@@ -20,6 +20,7 @@
     <string name="menssage">Menssagem</string>
     <string name="enviar">Enviar</string>
     <string name="to">Para</string>
+    <string name="acceptButton">Atender</string>
     
 
 </resources>
