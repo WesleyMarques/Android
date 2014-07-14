@@ -3,6 +3,7 @@ package com.example.diarycall.GUI;
 import java.io.File;
 
 import com.example.diarycall.R;
+import com.example.diarycall.codes.Contato;
 import com.example.diarycall.data.DataOffline;
 
 import android.app.Activity;
@@ -10,6 +11,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,7 +46,7 @@ public class InfoContato extends Activity {
 		super.onStart();
 	}
 
-	private void setInfo() {
+	private void setInfo(){		
 		nomeEdt.setText(nome);
 		foneEdt.setText(fone);
 		setEnableCampos(false);
@@ -65,16 +67,30 @@ public class InfoContato extends Activity {
 	 * Action of button edit
 	 */
 	public void editarInfo(View view) {
+		
 		setVisiInSaveButton(View.VISIBLE);
 		setEnableCampos(true);
 	}
 
 	/**
 	 * Action of button save
+	 * @throws Exception 
 	 */
-	public void salvarInfo(View view) {
-		setInfo();
+	public void salvarInfo(View view) throws Exception {
+		data.loadContacts(getFileStreamPath("contacts.dat"));
+		Log.i("Dados", nomeEdt.getText().toString()+"-"+foneEdt.getText().toString());
+		if (data.editByOldNumber(getFileStreamPath("contacts.dat"),fone, new Contato(nomeEdt.getText().toString(),foneEdt.getText().toString()))) {
+			nome = nomeEdt.getText().toString();
+			fone = foneEdt.getText().toString();
+			setInfo();
+			setResult(DiaryCall.EDIT_CONTACT);
+			Toast.makeText(getApplicationContext(), "Alteração ralizada com sucesso", Toast.LENGTH_SHORT).show();
+		}else{
+			Toast.makeText(getApplicationContext(), "Usuário não encontrado", Toast.LENGTH_SHORT).show();
+		}
+		
 		setVisiInSaveButton(View.INVISIBLE);
+		
 	}
 
 	public void enviarMsg(View view) {
@@ -86,7 +102,7 @@ public class InfoContato extends Activity {
 							SendMessage.class);
 					sengMsg.putExtra("nome", nome);
 					sengMsg.putExtra("fone", fone);
-					startActivity(sengMsg);// chama a tela
+					startActivityForResult(sengMsg,0);// chama a tela
 				}
 			};
 			threadInfoContact.start();
@@ -109,6 +125,7 @@ public class InfoContato extends Activity {
 					public void onClick(DialogInterface arg0, int arg1) {
 						try {
 							deleteContatoAux();
+							setResult(DiaryCall.DELETE_CONTACT);
 							finish();
 						} catch (Exception e) {
 							e.printStackTrace();

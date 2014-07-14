@@ -1,27 +1,15 @@
 package com.example.diarycall.GUI;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.StreamCorruptedException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.example.diarycall.R;
 import com.example.diarycall.codes.Contato;
-import com.example.diarycall.data.DataOffline;
+import com.example.diarycall.controller.Controller;
 
-import android.R.bool;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,18 +20,19 @@ public class ContatoGUI extends Activity {
 	private EditText txtTelefone;
 	private String[] dados = new String[2];
 	private Contato contactActual;
-	private DataOffline data;
+	private Controller controller = null;
 
-	public ContatoGUI() {
+	public ContatoGUI() throws Exception {
 		contactActual = new Contato();
-		data = new DataOffline();
+		controller = new Controller();
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.cadastro);
-		
+		controller.setFileContacts(getFileStreamPath("contacts.dat"));
+		controller.carregaContatos();
 		try {
 			txtNome = (EditText) findViewById(R.id.edtName);
 			txtTelefone = (EditText) findViewById(R.id.edtPhone);
@@ -52,6 +41,10 @@ public class ContatoGUI extends Activity {
 		}
 	}
 
+	/**
+	 * Cadastrar Contato
+	 * @param view
+	 */
 	public void btnConfirmar_click(View view) {
 
 		try {
@@ -60,14 +53,14 @@ public class ContatoGUI extends Activity {
 			contactActual.setPhoneNumber(txtTelefone.getText().toString());
 			File file = getFileStreamPath("contacts.dat");
 			if (file.exists()) {
-				if (!contactExist(this.data.loadContacts(file)))
+				if (!contactExist(controller.getData().loadContacts(file)))
 					throw new Exception("Esse nome já foi registrado");						
 			}else{
 				toast("Arquivo não encontrado!");
 			}
-			this.data.setContact(contactActual);
-			this.data.saveData(file, this.data.getContacts());
-			setResult(Activity.RESULT_OK, data);
+			controller.getData().setContact(contactActual);
+			controller.getData().saveData(file, controller.getData().getContacts());
+			setResult(DiaryCall.INSERT_CONTACT, data);
 			finish();
 		} catch (Exception e) {
 			trace("Erro : " + e.getMessage());
@@ -81,22 +74,6 @@ public class ContatoGUI extends Activity {
 			}			
 		}		
 		return true;
-	}
-
-	public void btnThread_click(View view) {
-		try {
-			Thread threadCall = new Thread(){
-				@Override
-				public void run()
-	              {
-					Intent it = new Intent(ContatoGUI.this, CallReceive.class);
-					startActivityForResult(it,0);// chama a tela 
-	              }				
-			};
-			threadCall.start();
-		} catch (Exception e) {
-			trace("Erro : " + e.getMessage());
-		}					
 	}
 
 	public void btnCancelar_click(View view) {

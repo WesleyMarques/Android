@@ -25,6 +25,7 @@ public class SendMessage extends Activity{
 	public EditText toMsg;
 	public EditText searchMsg;
 	public Intent intent;
+	public String fonePrincipal;
 	private Controller control;
 	private ArrayAdapter<Menssagem> adaptador = null;
 	private ListView listSearch;
@@ -46,7 +47,8 @@ public class SendMessage extends Activity{
 		toMsg = (EditText) findViewById(R.id.editTextTo);
 		listSearch = (ListView) findViewById(R.id.listMensagens);
 		searchMsg = (EditText) findViewById(R.id.searchMsg);
-		toMsg.setText(intent.getStringExtra("nome")+"["+intent.getStringExtra("fone")+"]");
+		fonePrincipal = intent.getStringExtra("fone");
+		toMsg.setText(intent.getStringExtra("nome")+"["+fonePrincipal+"]");
 		
 		//Evento para o campo de texto quando modificado
 				searchMsg.addTextChangedListener(new TextWatcher() {
@@ -93,7 +95,7 @@ public class SendMessage extends Activity{
 	}
 	
 	public void sendMsg(View view) throws Exception{
-		if (control.enviaMsg(intent.getStringExtra("fone"), msgCampo.getText().toString())) {
+		if (control.enviaMsg(fonePrincipal, msgCampo.getText().toString())) {
 			msgCampo.setText("");
 			toMsg.setText("");
 		}

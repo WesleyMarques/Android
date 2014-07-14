@@ -86,6 +86,10 @@ public class Controller {
 		
 	}
 	
+	public DataOffline getData(){
+		return dataBase;
+	}
+	
 	
 	
 

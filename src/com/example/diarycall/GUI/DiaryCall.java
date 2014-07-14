@@ -27,6 +27,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class DiaryCall extends Activity {
+	
+	public static int DELETE_CONTACT = 5;
+	public static int INSERT_CONTACT = 6;
+	public static int EDIT_CONTACT = 7;
+
 
 	private List<Contato> contacts = null;
 	private ArrayAdapter<Contato> adaptador = null;
@@ -92,7 +97,7 @@ public class DiaryCall extends Activity {
 							Intent infoContato = new Intent(DiaryCall.this, InfoContato.class);
 							infoContato.putExtra("nome", contacts.get(auxPosition).getNome());
 							infoContato.putExtra("fone", contacts.get(auxPosition).getPhoneNumber());
-							startActivity(infoContato);// chama a tela
+							startActivityForResult(infoContato,0);// chama a tela
 						}
 					};
 					threadInfoContact.start();
@@ -130,10 +135,15 @@ public class DiaryCall extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == RESULT_OK) {
+		if (resultCode == INSERT_CONTACT) {
 			toast("Contato cadastrado com sucesso!");
-		} else {
-			toast("Contato não cadastrado!");
+		}else if(resultCode == DELETE_CONTACT){
+			toast("Contato removido com sucesso!");			
+		}else if(resultCode == EDIT_CONTACT){
+			;
+		}
+		else {
+			toast("Operação não concluída!");
 		}
 	}
 

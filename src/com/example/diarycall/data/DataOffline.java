@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import android.R.bool;
+
 import com.example.diarycall.codes.Contato;
 import com.example.diarycall.codes.Menssagem;
 
@@ -25,7 +27,6 @@ import com.example.diarycall.codes.Menssagem;
 public class DataOffline {
 
     private List<Contato> contacts;
-    //A key é do número que enviou a msg
     private List<Menssagem> messages;
     
     public DataOffline() {
@@ -65,12 +66,12 @@ public class DataOffline {
      *
      */
     public List<Menssagem> loadMessage(File file) throws Exception {
-        List<Object> listConts = new ArrayList<Object>();
+        List<Object> listMsgs = new ArrayList<Object>();
         messages = new ArrayList<Menssagem>();
-        listConts = readData(file);
+        listMsgs = readData(file);
         // Downcast da lista de usuÃ¡rios do tipo Object para User
-        if (listConts != null) {
-            for (Object object : listConts) {
+        if (listMsgs != null) {
+            for (Object object : listMsgs) {
                 messages.add((Menssagem) object);
             }
         }
@@ -96,14 +97,11 @@ public class DataOffline {
 				throw new Exception("Erro no arquivo: "+ e.getMessage());
 			} catch (IOException e) {
 				throw new Exception("Erro no Carregamento: "+ e.getMessage());
-			}finally{
-				if (in != null) {
-					dataObject = (List<Object>) in.readObject();
-					in.close();						
-				}
-	            			
 			}
-            
+        	if (in != null) {
+				dataObject = (List<Object>) in.readObject();
+				in.close();
+        	}
         return dataObject;
     }
     /**
@@ -124,10 +122,11 @@ public class DataOffline {
                 return false;
             }
             outObj.writeObject(obj);
-            out.close();
-            outObj.close();
         } catch (Exception e) {
             throw new Exception("Erro ao salvar os dados");
+        }finally{
+        	out.close();
+            outObj.close();
         }
         return true;
     }
@@ -156,6 +155,18 @@ public class DataOffline {
 			}
     		i++;
 		}
+    	return false;
+    }
+    
+    public boolean editByOldNumber(File file,String num, Contato newCont) throws Exception{
+    	for (Contato contato : contacts) {
+    		if (contato.getPhoneNumber().equals(num)) {
+    			contato.setNome(newCont.getNome());
+    			contato.setPhoneNumber(newCont.getPhoneNumber());
+    			saveData(file, contacts);
+    			return true;
+			}			
+		}    	
     	return false;
     }
 }
